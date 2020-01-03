@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -23,5 +24,6 @@ public class ApplicantDTO implements Serializable {
     private String name;
     private int age;
     private List<AdressDTO> address;
+  
 
 }
