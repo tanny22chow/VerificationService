@@ -18,10 +18,10 @@ public class SwaggerConfig {
 	@Bean
 	public Docket swaggerconfig() {
 		return new Docket(DocumentationType.SWAGGER_2)
-				.apiInfo(new ApiInfoBuilder().version("1.0").description("Application Detail Service")
-						.title("Application Detail Service")
+				.apiInfo(new ApiInfoBuilder().version("1.0").description("Verification Service")
+						.title("Verification Service")
 						.contact(new Contact("Tanmoy", "abc@gmail.com", "abc@gmail.com")).build())
-				.select().apis(RequestHandlerSelectors.basePackage("com.springPrac.springredisdemo"))
+				.select().apis(RequestHandlerSelectors.basePackage("com.SpringDemo.VerificationService"))
 				.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class)).paths(PathSelectors.any())
 				.build();
 	}

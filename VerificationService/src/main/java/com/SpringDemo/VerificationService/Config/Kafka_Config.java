@@ -28,7 +28,7 @@ public class Kafka_Config {
 
     @Bean
     public ProducerFactory<Long,Object> applicationProducerFactory() {
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9091");
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         properties.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, 30);
@@ -44,22 +44,23 @@ public class Kafka_Config {
 	@Bean
 	public ConsumerFactory consumerfactory() {
 		Map<String,Object>mapconfiguration= new HashMap<String,Object>();
-		mapconfiguration.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"localhost:9092");
+		mapconfiguration.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"localhost:9091");
 		mapconfiguration.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		mapconfiguration.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 		mapconfiguration.put(ConsumerConfig.EXCLUDE_INTERNAL_TOPICS_CONFIG, true);
 		mapconfiguration.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,false);
 		mapconfiguration.put(ConsumerConfig.GROUP_ID_CONFIG,"verification_service");
 		mapconfiguration.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,"latest");
-		ConsumerFactory<String,ApplicantDTO> applicantInfofactory=new DefaultKafkaConsumerFactory<String,ApplicantDTO>(
+		ConsumerFactory<String,String> applicantInfofactory=new DefaultKafkaConsumerFactory<String,String>(
 				mapconfiguration,new StringDeserializer(),
-				new JsonDeserializer<>(ApplicantDTO.class,false));
+				//new JsonDeserializer<>(ApplicantDTO.class,false));
+				new StringDeserializer());
 		return applicantInfofactory;
 	}
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String,ApplicantDTO> ApplicantInfoDTOcontainer() {
-		ConcurrentKafkaListenerContainerFactory<String,ApplicantDTO> containerfactory= 
-				new ConcurrentKafkaListenerContainerFactory<String,ApplicantDTO>();
+	public ConcurrentKafkaListenerContainerFactory<String,String> ApplicantInfoDTOcontainer() {
+		ConcurrentKafkaListenerContainerFactory<String,String> containerfactory= 
+				new ConcurrentKafkaListenerContainerFactory<String,String>();
 		containerfactory.setConcurrency(3);
 		containerfactory.setConsumerFactory(consumerfactory());
 		return containerfactory;

@@ -31,13 +31,12 @@ public class VerificationDetails implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "verification_id")
 	private Long verification_id;
-	@ColumnDefault("null")
+	@Column(columnDefinition="varchar(255) default ''")
 	private String verifier_name;
 	@CreatedDate
 	private LocalDate verifyDate;
-	@Lob
 	private String applicantDetails;
-	@ColumnDefault("verification pending")
+	@Column(columnDefinition="varchar(255) default 'verification pending'")
 	private String status;
 
 }
